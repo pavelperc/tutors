@@ -1,5 +1,6 @@
 package com.pavelperc.tutors.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 // https://grokonez.com/spring-framework/spring-data/kotlin-springjpa-hibernate-one-many-relationship
@@ -9,7 +10,8 @@ import javax.persistence.*
 data class TutorCertificate(
         @ManyToOne(targetEntity = Tutor::class)
         @JoinColumn(name = "tutor_id", updatable = false)
-        val tutor: Tutor,
+        @JsonIgnore
+        val tutor: Tutor?,
         
         @Column(nullable = false)
         var name: String,

@@ -41,7 +41,7 @@ class Tutor(
         lastName: String? = null
 ) : Person(login, email, firstName, middleName, lastName) {
     
-    @OneToMany(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "tutor", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
     var certificates: MutableList<TutorCertificate> = mutableListOf()
     
     override fun toString() = "Tutor: ${super.toString()}"
