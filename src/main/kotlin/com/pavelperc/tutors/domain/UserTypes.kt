@@ -44,6 +44,13 @@ class Tutor(
     @OneToMany(mappedBy = "tutor", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
     var certificates: MutableList<TutorCertificate> = mutableListOf()
     
+    // why we should prefer sets in many to many:
+    // https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/
+    
+    @ManyToMany(targetEntity = Subject::class, fetch = FetchType.EAGER)
+    var subjects: MutableSet<Subject> = mutableSetOf()
+    
+    
     override fun toString() = "Tutor: ${super.toString()}"
 }
 
