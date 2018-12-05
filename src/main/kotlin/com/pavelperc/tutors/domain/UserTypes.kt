@@ -5,19 +5,22 @@ import javax.persistence.*
 
 // https://thoughts-on-java.org/complete-guide-inheritance-strategies-jpa-hibernate/
 
+// why we need open on every property:
+// https://stackoverflow.com/questions/37733629/kotlin-with-jpa-hibernate-no-lazy-loading-without-open
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 sealed class Person(
         @Column(unique = true, nullable = false)
         open var login: String,
         
-        var email: String? = null,
+        open var email: String? = null,
         
-        var firstName: String? = null,
+        open var firstName: String? = null,
         
-        var middleName: String? = null,
+        open var middleName: String? = null,
         
-        var lastName: String? = null
+        open var lastName: String? = null
 ) {
     val fullName: String
         get() = listOfNotNull(firstName, middleName, lastName).joinToString(" ")
