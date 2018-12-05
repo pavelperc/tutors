@@ -5,7 +5,7 @@ import javax.persistence.*
 
 // https://thoughts-on-java.org/complete-guide-inheritance-strategies-jpa-hibernate/
 
-@Entity(name = "Persons")
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 sealed class Person(
         @Column(unique = true, nullable = false)
@@ -13,13 +13,10 @@ sealed class Person(
         
         var email: String? = null,
         
-        @Column(name = "first_name")
         var firstName: String? = null,
         
-        @Column(name = "middle_name")
         var middleName: String? = null,
         
-        @Column(name = "last_name")
         var lastName: String? = null
 ) {
     val fullName: String
@@ -35,7 +32,7 @@ sealed class Person(
     
 }
 
-@Entity(name = "Tutors")
+@Entity
 class Tutor(
         login: String,
         email: String? = null,
@@ -44,11 +41,13 @@ class Tutor(
         lastName: String? = null
 ) : Person(login, email, firstName, middleName, lastName) {
     
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+    var certificates: MutableList<TutorCertificate> = mutableListOf()
     
     override fun toString() = "Tutor: ${super.toString()}"
 }
 
-@Entity(name = "Students")
+@Entity
 class Student(
         login: String,
         email: String? = null,

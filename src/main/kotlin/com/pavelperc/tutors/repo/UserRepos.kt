@@ -7,12 +7,18 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface PersonRepo : JpaRepository<Person, Long> {
     
+    fun findByLogin(login: String) : Person?
+
 }
 
 interface StudentRepo : JpaRepository<Student, Long> {
     
+    fun findByLogin(login: String) : Student?
+    
 }
 
 interface TutorRepo : JpaRepository<Tutor, Long> {
+    
+    fun findByLogin(login: String) : Tutor?
     
 }

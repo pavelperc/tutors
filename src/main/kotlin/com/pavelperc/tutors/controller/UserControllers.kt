@@ -22,7 +22,7 @@ class PersonController(
 
 @RestController
 @RequestMapping("api/tutors")
-class TutorsController(
+class TutorController(
         private val tutorRepo: TutorRepo
 ) {
     
@@ -32,7 +32,7 @@ class TutorsController(
 
 @RestController
 @RequestMapping("api/students")
-class StudentsController(
+class StudentController(
         private val studentRepo: StudentRepo
 ) {
     

@@ -20,10 +20,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @DataJpaTest
 internal class UsersTest {
     
-    @Autowired lateinit var personRepo: PersonRepo
-    @Autowired lateinit var studentRepo: StudentRepo
-    @Autowired lateinit var tutorRepo: TutorRepo
-    
+    @Autowired
+    lateinit var personRepo: PersonRepo
+    @Autowired
+    lateinit var studentRepo: StudentRepo
+    @Autowired
+    lateinit var tutorRepo: TutorRepo
+
 //    val log = LogFactory.getLog("my_logs")!!
     
     @BeforeEach
@@ -43,7 +46,7 @@ internal class UsersTest {
     @Test
     fun splitUsers() {
         personRepo.findAll().shouldBeEmpty()
-    
+        
         personRepo.saveAll(listOf(
                 Tutor("pavel"),
                 Student("ivan"),
@@ -64,7 +67,7 @@ internal class UsersTest {
     @Test
     fun `check inheritance in personRepo`() {
         personRepo.findAll().shouldBeEmpty()
-    
+        
         personRepo.saveAll(listOf(
                 Tutor("pavel"),
                 Student("ivan"),
@@ -76,6 +79,40 @@ internal class UsersTest {
         pavel shouldBeInstanceOf Tutor::class
         ivan shouldBeInstanceOf Student::class
         alex shouldBeInstanceOf Tutor::class
+    }
+    
+    
+    @Test
+    fun `add to different repos`() {
+        
+        tutorRepo.save(Tutor("pavel"))
+        tutorRepo.save(Tutor("alex"))
+        
+        studentRepo.save(Student("ivan"))
+        
+        
+        personRepo.findAll().map { it.login }
+                .shouldContainSame(listOf("pavel", "ivan", "alex"))
+    }
+    
+    @Test
+    fun testFindByLogin() {
+        
+        tutorRepo.save(Tutor("pavel"))
+        tutorRepo.save(Tutor("alex"))
+        
+        studentRepo.save(Student("ivan"))
+    
+    
+        personRepo.findByLogin("pavel")
+                .shouldNotBeNull()
+                .login shouldEqual "pavel"
+        
+        tutorRepo.findByLogin("pavel")
+                .shouldNotBeNull()
+                .login shouldEqual "pavel"
+        
+        studentRepo.findByLogin("pavel").shouldBeNull()
         
     }
     
