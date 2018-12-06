@@ -31,6 +31,7 @@ internal class TutorCertificateTest @Autowired constructor(
         tutor = tutorRepo.findByLogin("tutor1").shouldNotBeNull()
         
         val certificate = tutor.certificates.shouldNotBeEmpty()[0]
+        
         certificate.tutor.shouldNotBeNull() shouldEqual tutor
     }
 }

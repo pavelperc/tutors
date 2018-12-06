@@ -54,8 +54,14 @@ class Tutor(
     var subjects: MutableSet<Subject> = mutableSetOf()
     
     
+    @ManyToMany(targetEntity = Course::class, fetch = FetchType.EAGER)
+    var courses: MutableSet<Course> = mutableSetOf()
+    
+    
     override fun toString() = "Tutor: ${super.toString()}"
 }
+
+
 
 @Entity
 class Student(

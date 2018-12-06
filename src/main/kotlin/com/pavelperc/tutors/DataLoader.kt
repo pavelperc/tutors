@@ -1,6 +1,7 @@
 package com.pavelperc.tutors
 
 import com.pavelperc.tutors.domain.*
+import com.pavelperc.tutors.repo.CourseRepo
 import com.pavelperc.tutors.repo.PersonRepo
 import com.pavelperc.tutors.repo.SubjectRepo
 import org.springframework.boot.ApplicationArguments
@@ -13,9 +14,9 @@ import java.security.cert.Certificate
 class DataLoader(
         // autowired by default
         private val personRepo: PersonRepo,
-        private val subjectRepo: SubjectRepo
+        private val subjectRepo: SubjectRepo,
+        private val courseRepo: CourseRepo
 ) : ApplicationRunner {
-    
     
     override fun run(args: ApplicationArguments) {
         
@@ -27,8 +28,8 @@ class DataLoader(
         val (math, informatics, russian) = listOf(Subject("math"), Subject("informatics"), Subject("russian"))
         
         // our best tutors
-        val sergey = Tutor("sergey", "sanya_belij@brigada.com", firstName = "Серёга", lastName = "Безруков")
-        val ivan = Tutor("ivan", "super_tutor@hse.ru", firstName = "Просто Ваня")
+        var sergey = Tutor("sergey", "sanya_belij@brigada.com", firstName = "Серёга", lastName = "Безруков")
+        var ivan = Tutor("ivan", "super_tutor@hse.ru", firstName = "Просто Ваня")
         
         
         sergey.certificates.add(TutorCertificate(sergey, "lover", "Покоритель женских сердец."))
@@ -43,6 +44,18 @@ class DataLoader(
         
         
         subjectRepo.saveAll(listOf(math, russian, informatics))
-        personRepo.saveAll(listOf(sergey, ivan, pavel, andrey, katja))
+        personRepo.saveAll(listOf(pavel, andrey, katja))
+        ivan = personRepo.save(ivan)
+        sergey = personRepo.save(sergey)
+        
+        
+        val matan = Course("matan", math, mutableSetOf(ivan, sergey))
+        val diskra = Course("diskra", informatics, mutableSetOf(sergey))
+    
+        courseRepo.saveAll(listOf(matan, diskra))
+        // with updated courses
+        personRepo.saveAll(listOf(ivan, sergey))
+    
+        listOf(courseRepo, subjectRepo, personRepo).forEach { it.flush() }
     }
 }
