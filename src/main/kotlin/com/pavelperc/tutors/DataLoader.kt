@@ -49,9 +49,13 @@ class DataLoader(
         sergey = personRepo.save(sergey)
         
         
-        val matan = Course("matan", math, mutableSetOf(ivan, sergey))
-        val diskra = Course("diskra", informatics, mutableSetOf(sergey))
-    
+        val matan = Course("matan", math, owner = sergey)
+        matan.connectTutors(ivan, sergey)
+        
+        val diskra = Course("diskra", informatics, owner = sergey)
+        diskra.connectTutors(sergey)
+        
+        
         courseRepo.saveAll(listOf(matan, diskra))
         // with updated courses
         personRepo.saveAll(listOf(ivan, sergey))

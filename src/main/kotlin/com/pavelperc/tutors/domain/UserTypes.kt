@@ -32,6 +32,19 @@ sealed class Person(
     override fun toString() =
             "Person(login='$login', email=$email, firstName=$firstName, middleName=$middleName, lastName=$lastName, id=$id)"
     
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Person) return false
+    
+        if (id != other.id) return false
+        
+        return true
+    }
+    
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+    
     
 }
 
@@ -59,6 +72,22 @@ class Tutor(
     
     
     override fun toString() = "Tutor: ${super.toString()}"
+    
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        
+        other as Tutor
+        
+        if (id != other.id) return false
+        return true
+    }
+    
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+    
+    
 }
 
 
@@ -73,6 +102,21 @@ class Student(
 ) : Person(login, email, firstName, middleName, lastName) {
     
     override fun toString() = "Student: ${super.toString()}"
+    
+    
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        
+        other as Student
+        
+        if (id != other.id) return false
+        return true
+    }
+    
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }
 
 
