@@ -58,10 +58,10 @@ internal class CourseTest {
         
     
         // don't check invalid tutors here (without needed subject name)
-        var matan = Course("matan", math, owner = tutor1)
+        var matan = Course("matan", math)
         matan.connectTutors(listOf(tutor1, tutor2))
         
-        var diskra = Course("diskra", informatics, owner = tutor2)
+        var diskra = Course("diskra", informatics)
         diskra.connectTutors(listOf(tutor2, tutor3))
         
         tutor2.courses shouldContainSame listOf(matan, diskra)
@@ -100,10 +100,10 @@ internal class CourseTest {
         tutorRepo.saveAll(listOf(tutor1, tutor2, tutor3))
         
         
-        val matan = courseRepo.save(Course("matan", math, tutor1))
+        val matan = courseRepo.save(Course("matan", math))
         matan.connectTutors(listOf(tutor1))
         
-        val diskra = courseRepo.save(Course("diskra", informatics, owner = tutor2))
+        val diskra = courseRepo.save(Course("diskra", informatics))
         
         tutor1.subjects shouldNotContain informatics
         // should add informatics to tutors courses
@@ -143,9 +143,9 @@ internal class CourseTest {
         tutorRepo.saveAll(listOf(tutor1, tutor2, tutor3))
         
         
-        val matan = courseRepo.save(Course("matan", math, owner = tutor1))
+        val matan = courseRepo.save(Course("matan", math))
         // don't check invalid tutors here (without needed subject name)
-        val diskra = courseRepo.save(Course("diskra", informatics, owner = tutor1))
+        val diskra = courseRepo.save(Course("diskra", informatics))
     
     
         matan.connectTutors(tutor1, tutor3)

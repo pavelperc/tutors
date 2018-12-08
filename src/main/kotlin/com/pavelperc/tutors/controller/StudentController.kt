@@ -23,11 +23,6 @@ class StudentController(
         }
     }
     
-//    @GetMapping("{login}")
-//    fun getByLogin(@PathVariable login: String): Student? {
-//        return studentRepo.findByLogin(login)
-//    }
-    
     @GetMapping("{id}")
     fun getById(@PathVariable("id") student: Student?) = student
 

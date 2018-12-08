@@ -49,10 +49,10 @@ class DataLoader(
         sergey = personRepo.save(sergey)
         
         
-        val matan = Course("matan", math, owner = sergey)
+        val matan = Course("matan", math)
         matan.connectTutors(ivan, sergey)
         
-        val diskra = Course("diskra", informatics, owner = sergey)
+        val diskra = Course("diskra", informatics)
         diskra.connectTutors(sergey)
         
         

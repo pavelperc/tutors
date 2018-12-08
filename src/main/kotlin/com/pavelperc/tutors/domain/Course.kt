@@ -13,18 +13,14 @@ open class Course(
         open var name: String,
         
         @ManyToOne()
-        open var subject: Subject,
-
-        @ManyToOne(optional = false)
-        @JsonIgnore
-        open val owner: Tutor
+        open var subject: Subject
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     open val id: Long = 0
     
     @ManyToMany(mappedBy = "courses")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     open val tutors: Set<Tutor> = mutableSetOf()
     
     
