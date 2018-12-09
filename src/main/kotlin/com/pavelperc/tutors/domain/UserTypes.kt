@@ -57,7 +57,7 @@ class Tutor(
         lastName: String? = null
 ) : Person(login, email, firstName, middleName, lastName) {
     
-    @OneToMany(mappedBy = "tutor", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "tutor", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.LAZY)
     var certificates: MutableList<TutorCertificate> = mutableListOf()
     
     // why we should prefer sets in many to many:
@@ -68,7 +68,8 @@ class Tutor(
     
     
     @ManyToMany(targetEntity = Course::class, fetch = FetchType.EAGER)
-    var courses: MutableSet<Course> = mutableSetOf()
+    val courses: MutableSet<Course> = mutableSetOf()
+    
     
     
     override fun toString() = "Tutor: ${super.toString()}"

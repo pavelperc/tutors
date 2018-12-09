@@ -20,8 +20,11 @@ open class Course(
     open val id: Long = 0
     
     @ManyToMany(mappedBy = "courses")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     open val tutors: Set<Tutor> = mutableSetOf()
+    
+    open val tutorIds: Set<Long>
+        get() = tutors.map { it.id }.toSet()
     
     
     fun connectTutors(vararg tutors: Tutor) = connectTutors(tutors.asList())
@@ -29,9 +32,6 @@ open class Course(
     fun connectTutors(tutors: Collection<Tutor>) {
         (this.tutors as MutableSet<Tutor>).addAll(tutors)
         tutors.forEach { tutor ->
-            if (!tutor.subjects.contains(subject)) {
-                tutor.subjects.add(subject)
-            }
             tutor.courses.add(this)
         }
     }
