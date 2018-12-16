@@ -59,7 +59,7 @@ class DataLoader(
         courseRepo.saveAll(listOf(matan, diskra))
         // with updated courses
         personRepo.saveAll(listOf(ivan, sergey))
-    
+
         listOf(courseRepo, subjectRepo, personRepo).forEach { it.flush() }
     }
 }

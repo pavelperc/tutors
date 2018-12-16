@@ -5,6 +5,7 @@ import com.pavelperc.tutors.exceptions.ConflictException
 import com.pavelperc.tutors.exceptions.NotFoundException
 import com.pavelperc.tutors.repo.CourseRepo
 import com.pavelperc.tutors.repo.TutorRepo
+import com.pavelperc.tutors.service.CourseService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeanUtils
 import org.springframework.web.bind.annotation.*
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("api/courses")
 class CourseController(
         private val courseRepo: CourseRepo,
-        private val tutorRepo: TutorRepo
+        private val tutorRepo: TutorRepo,
+        private val courseService: CourseService
 ) {
     
     val logger = LoggerFactory.getLogger(CourseController::class.java)
@@ -44,44 +46,25 @@ class CourseController(
         return courseRepo.save(course)
     }
     
-    
+
     @PostMapping("{id}/connectTutors")
     fun connectTutors(@PathVariable("id") course: Course?, @RequestBody tutorIds: List<Long>): Course? {
         // if null then trow an exception else cast to not null
         course ?: throw NotFoundException("Course not found!!!")
-        
-        val tutors = tutorRepo.findAllById(tutorIds)
-        logger.debug("In connectTutors. Received tutors: $tutors")
-        
-        tutors.forEach { tutor ->
-            if (!tutor.subjects.contains(course.subject))
-                throw ConflictException("Can not connect course ${course.name} with tutor $tutor. Tutor doesn't have course subject ${course.subject.name}.")
-        }
-        
-        course.connectTutors(tutors)
-        
-        courseRepo.save(course)
-        tutorRepo.saveAll(tutors)
-        
-        return course
+
+        return courseService.connectTutors(tutorIds, course)
     }
-    
+
+
+
     @PostMapping("{id}/disconnectTutors")
     fun disconnectTutors(@PathVariable("id") course: Course?, @RequestBody tutorIds: List<Long>): Course? {
         // if null then trow an exception else cast to not null
         course ?: throw NotFoundException("Course not found!!!")
-        
-        val tutors = tutorRepo.findAllById(tutorIds)
-        logger.debug("In disconnectTutors. Received tutors: $tutors")
-        
-        course.disconnectTutors(tutors)
-        
-        courseRepo.save(course)
-        tutorRepo.saveAll(tutors)
-        
-        return course
+
+        return courseService.disconnectTutors(tutorIds, course)
     }
-    
+
     @DeleteMapping("{id}")
     fun delete(@PathVariable("id") course: Course) {
         courseRepo.delete(course)
