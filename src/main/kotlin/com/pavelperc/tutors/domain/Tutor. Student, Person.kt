@@ -1,5 +1,6 @@
 package com.pavelperc.tutors.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 
@@ -27,7 +28,7 @@ sealed class Person(
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0
+    open val id: Long = 0
     
     override fun toString() =
             "Person(login='$login', email=$email, firstName=$firstName, middleName=$middleName, lastName=$lastName, id=$id)"
@@ -70,8 +71,9 @@ class Tutor(
     @ManyToMany(targetEntity = Course::class, fetch = FetchType.EAGER)
     val courses: MutableSet<Course> = mutableSetOf()
     
-    @OneToMany(mappedBy = "tutor", fetch = FetchType.EAGER)
-    val schedules: MutableSet<TutorSchedule> = mutableSetOf()
+    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
+    @JsonIgnore
+    var tutorSchedules: MutableSet<TutorSchedule> = mutableSetOf()
     
     override fun toString() = "Tutor: ${super.toString()}"
     
@@ -89,9 +91,6 @@ class Tutor(
         return id.hashCode()
     }
 
-
-
-    
 }
 
 

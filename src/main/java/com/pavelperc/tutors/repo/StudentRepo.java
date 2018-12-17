@@ -8,5 +8,4 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
     
     @Nullable
     Student findByLogin(String login);
-    
 }

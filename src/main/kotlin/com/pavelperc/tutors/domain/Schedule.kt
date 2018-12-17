@@ -1,6 +1,7 @@
 package com.pavelperc.tutors.domain
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalTime
 import javax.persistence.*
 
@@ -15,7 +16,7 @@ import javax.persistence.*
 open class Schedule(
 
         @Enumerated(EnumType.STRING)
-        open var day: DayOfWeek,
+        open var day: Day,
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
         open var startTime: LocalTime,
@@ -30,6 +31,7 @@ open class Schedule(
 
 
     @OneToMany(mappedBy = "schedule", cascade = arrayOf(CascadeType.REMOVE), fetch = FetchType.LAZY)
+    @JsonIgnore
     open val tutorSchedules: Set<TutorSchedule> = mutableSetOf()
 
 
@@ -51,4 +53,10 @@ open class Schedule(
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+    override fun toString(): String {
+        return "Schedule(day=$day, startTime=$startTime, endTime=$endTime, id=$id)"
+    }
+
+
 }

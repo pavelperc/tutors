@@ -1,0 +1,85 @@
+body{
+    background-color: #CFD0CF;
+}
+
+.title{
+    font-size: 42px;
+    line-height: 47px;
+    color: #433444;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-family: Arial;
+    font-weight: 600;
+}
+
+
+.cards{
+    display: grid;
+    grid-template-columns:  repeat(2, minmax(260px, 260px));
+    box-sizing: border-box;
+    grid-row-gap: 50px;
+    grid-column-gap: 100px;
+    justify-content: center;
+
+    -moz-perspective: 600px;
+    -ms-perspective: 600px;
+    -webkit-perspective: 600px;
+    -o-perspective: 600px;
+    perspective: 600px;
+}
+
+a.button {
+    font-weight: 700;
+    color: black;
+    text-decoration: none;
+    padding: .8em 1em calc(.8em + 3px);
+    border-radius: 3px;
+    transition: 0.2s;
+    text-align: center;
+    background: #c2c2c2;
+}
+a.button1{
+       background: #DE8A9B;
+       box-shadow: 0 -3px #C77C8B inset;
+   }
+   a.button1:hover { background: #C77C8B;}
+   a.button1:active {
+       background: #B16E7C;
+       box-shadow: 0 3px #B16E7C inset;
+       color: white !important;
+   }
+
+   a.button2{
+       background: #A4D6EE;
+       box-shadow: 0 -3px #93c0d6 inset;
+   }
+   a.button2:hover { background: #93c0d6; }
+   a.button2:active {
+       background: #83abbe;
+       box-shadow: 0 3px #83abbe inset;
+       color: white !important;
+   }
+
+
+a.button3{
+     background: #efcf6e;
+     box-shadow: 0 -3px #d7ba63 inset;
+ }
+ a.button3:hover { background: #d7ba63;}
+ a.button3:active {
+     background: #bfa558;
+     box-shadow: 0 3px #bfa558 inset;
+     color: white !important;
+ }
+
+ a.button4{
+     background: #d3b4d5;
+     box-shadow: 0 -3px #bda2bf inset;
+ }
+ a.button4:hover { background: #bda2bf; }
+ a.button4:active {
+     background: #a890aa;
+     box-shadow: 0 3px #a890aa inset;
+     color: white !important;
+ }

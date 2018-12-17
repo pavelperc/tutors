@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Api help</title>
+</head>
+<body>
+<h3>Помощь по api</h3>
+
+Основные ветки:
+<ul>
+    <li>api/persons</li>
+    <li>GET api/tutors - все</li>
+    <ul>
+        <li>GET api/tutors/?login=sergey</li>
+
+        <li>GET api/tutors/{id}/schedule?day=Sunday</li>
+
+        <li>GET api/tutors/{id}/slots - список всех выбранных часов работы, пустых</li>
+        <li>GET api/tutors/{id}/slots?day=Sunday</li>
+        <li>GET api/tutors/{id}/busy</li>
+        <li>GET api/tutors/{id}/busy?day=Sunday&course=expressSpanish</li>
+
+        <li>POST api/tutors/{id}</li>
+        <li>PUT api/tutors/{id}</li>
+        <li>DELETE api/tutors/{id}</li>
+    </ul>
+    <li>api/students</li>
+    <li>api/courses</li>
+    <ul>
+        <li>Тоже есть, см код</li>
+    </ul>
+    <li>api/subjects</li>
+    <li>api/schedules</li>
+
+
+</ul>
+
+
+</body>
+</html>
