@@ -1,5 +1,6 @@
 package com.pavelperc.tutors.controller
 
+import com.pavelperc.tutors.domain.Day
 import com.pavelperc.tutors.domain.Schedule
 import com.pavelperc.tutors.domain.Tutor
 import com.pavelperc.tutors.domain.TutorSchedule
@@ -18,8 +19,13 @@ class ScheduleController(
 ) {
     
     @GetMapping
-    fun allSchedules(): List<Schedule> {
-        return scheduleRepo.findAll(Sort.by("day", "startTime"))
+    fun allSchedules(@RequestParam("day", required = false) day: Day?): List<Schedule> {
+        var ans = scheduleRepo.findAll().sortedBy { it.startTime.hour }.sortedBy { it.day.ordinal }
+
+        if (day != null) {
+            ans = ans.filter { it.day == day }
+        }
+        return ans
     }
 
 }

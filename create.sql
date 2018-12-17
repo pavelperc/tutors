@@ -1,20 +1,109 @@
-create sequence hibernate_sequence start with 1 increment by 1
-create table course (id bigint not null, name varchar(255) not null, subject_id bigint, primary key (id))
-create table person (id bigint not null, email varchar(255), first_name varchar(255), last_name varchar(255), login varchar(255) not null, middle_name varchar(255), primary key (id))
-create table student (id bigint not null, primary key (id))
-create table subject (id bigint not null, name varchar(255) not null, primary key (id))
-create table tutor (id bigint not null, primary key (id))
-create table tutor_courses (tutors_id bigint not null, courses_id bigint not null, primary key (tutors_id, courses_id))
-create table tutor_subjects (tutor_id bigint not null, subjects_id bigint not null, primary key (tutor_id, subjects_id))
-create table tutor_certificate (id bigint not null, description varchar(255) not null, name varchar(255) not null, tutor_id bigint, primary key (id))
-alter table course add constraint UK_4xqvdpkafb91tt3hsb67ga3fj unique (name)
-alter table person add constraint UK_3tnwg2lomhbqckauuc1997bx7 unique (login)
-alter table subject add constraint UK_p1jgir6qcpmqnxt4a8105wsot unique (name)
-alter table course add constraint FKm1expnaas0onmafqpktmjixnx foreign key (subject_id) references subject
-alter table student add constraint FKslayvtom01idjdexcxh76k935 foreign key (id) references person
-alter table tutor add constraint FKs5kvxap3nbwywuplcy7t04keg foreign key (id) references person
-alter table tutor_courses add constraint FK8os216pnb4e63o3st1imu1yke foreign key (courses_id) references course
-alter table tutor_courses add constraint FKgokokj66y7do6h8y4kpn8t823 foreign key (tutors_id) references tutor
-alter table tutor_subjects add constraint FK3wpswxifhr35whtb2nf3eo4p9 foreign key (subjects_id) references subject
-alter table tutor_subjects add constraint FKrbwej4ik99xyo11357qqwucco foreign key (tutor_id) references tutor
-alter table tutor_certificate add constraint FKbgaq5ffyw2y4c1mjc4bbn3l2h foreign key (tutor_id) references tutor
+create table PERSON
+(
+  ID          BIGINT       not null
+    primary key,
+  EMAIL       VARCHAR(255),
+  FIRST_NAME  VARCHAR(255),
+  LAST_NAME   VARCHAR(255),
+  LOGIN       VARCHAR(255) not null
+    unique,
+  MIDDLE_NAME VARCHAR(255)
+);
+
+create table SCHEDULE
+(
+  ID         BIGINT not null
+    primary key,
+  DAY        VARCHAR(255),
+  END_TIME   TIME(8),
+  START_TIME TIME(8),
+  unique (DAY, START_TIME, END_TIME)
+);
+
+create table STUDENT
+(
+  ID BIGINT not null
+    primary key,
+  constraint FKSLAYVTOM01IDJDEXCXH76K935
+    foreign key (ID) references PERSON
+);
+
+create table SUBJECT
+(
+  ID   BIGINT       not null
+    primary key,
+  NAME VARCHAR(255) not null
+    unique
+);
+
+create table COURSE
+(
+  ID         BIGINT       not null
+    primary key,
+  NAME       VARCHAR(255) not null
+    unique,
+  SUBJECT_ID BIGINT,
+  constraint FKM1EXPNAAS0ONMAFQPKTMJIXNX
+    foreign key (SUBJECT_ID) references SUBJECT
+);
+
+create table TUTOR
+(
+  ID BIGINT not null
+    primary key,
+  constraint FKS5KVXAP3NBWYWUPLCY7T04KEG
+    foreign key (ID) references PERSON
+);
+
+create table TUTOR_CERTIFICATE
+(
+  ID          BIGINT       not null
+    primary key,
+  DESCRIPTION VARCHAR(255) not null,
+  NAME        VARCHAR(255) not null,
+  TUTOR_ID    BIGINT,
+  constraint FKBGAQ5FFYW2Y4C1MJC4BBN3L2H
+    foreign key (TUTOR_ID) references TUTOR
+);
+
+create table TUTOR_COURSES
+(
+  TUTORS_ID  BIGINT not null,
+  COURSES_ID BIGINT not null,
+  primary key (TUTORS_ID, COURSES_ID),
+  constraint FK8OS216PNB4E63O3ST1IMU1YKE
+    foreign key (COURSES_ID) references COURSE,
+  constraint FKGOKOKJ66Y7DO6H8Y4KPN8T823
+    foreign key (TUTORS_ID) references TUTOR
+);
+
+create table TUTOR_SCHEDULE
+(
+  ID          BIGINT not null
+    primary key,
+  COURSE_ID   BIGINT,
+  SCHEDULE_ID BIGINT not null,
+  STUDENT_ID  BIGINT,
+  TUTOR_ID    BIGINT not null,
+  unique (TUTOR_ID, SCHEDULE_ID),
+  constraint FK2SICNGDIX45FQNBEM8QR9BIRB
+    foreign key (TUTOR_ID) references TUTOR,
+  constraint FK4SFKFYVHJ8ANQD3J2QP26QCNY
+    foreign key (STUDENT_ID) references STUDENT,
+  constraint FKO6JFF0F7NDUGJ28HOUGGAKFKY
+    foreign key (SCHEDULE_ID) references SCHEDULE,
+  constraint FKOXCQBV49KFT4UCSX9TJDIX2QJ
+    foreign key (COURSE_ID) references COURSE
+);
+
+create table TUTOR_SUBJECTS
+(
+  TUTOR_ID    BIGINT not null,
+  SUBJECTS_ID BIGINT not null,
+  primary key (TUTOR_ID, SUBJECTS_ID),
+  constraint FK3WPSWXIFHR35WHTB2NF3EO4P9
+    foreign key (SUBJECTS_ID) references SUBJECT,
+  constraint FKRBWEJ4IK99XYO11357QQWUCCO
+    foreign key (TUTOR_ID) references TUTOR
+);
+
