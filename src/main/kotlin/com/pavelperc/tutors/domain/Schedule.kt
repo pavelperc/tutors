@@ -35,9 +35,12 @@ open class Schedule(
     open val tutorSchedules: Set<TutorSchedule> = mutableSetOf()
 
 
-    open val numberOfTutors: Int
-        get() = tutorSchedules.size
+//    open val numberOfTutors: Int
+////        get() = tutorSchedules.size
+//        get() = -1
 
+//    open val namesOfTutors: List<String>
+//        get() = tutorSchedules.map { it.tutor.login }
 
 
 
