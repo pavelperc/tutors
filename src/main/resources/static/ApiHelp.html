@@ -20,20 +20,37 @@
         <li>GET api/tutors/{id}/slots?day=Sunday</li>
         <li>GET api/tutors/{id}/busy</li>
         <li>GET api/tutors/{id}/busy?day=Sunday&course=expressSpanish</li>
-
-        <li>POST api/tutors/{id}</li>
-        <li>PUT api/tutors/{id}</li>
-        <li>DELETE api/tutors/{id}</li>
+        <li>CRUD:</li>
+        <ul>
+            <li>GET api/tutors/{id}</li>
+            <li>POST api/tutors/{id}</li>
+            <li>PUT api/tutors/{id}</li>
+            <li>DELETE api/tutors/{id}</li>
+        </ul>
     </ul>
     <li>api/students</li>
+    <ul>
+        <li>CRUD</li>
+        <li>GET api/students/7/schedule</li>
+        <li>GET api/students/7/schedule?day=Friday</li>
+    </ul>
     <li>api/courses</li>
     <ul>
-        <li>Тоже есть, см код</li>
+        <li>CRUD</li>
+        <li>GET api/courses/{id}/schedule</li>
+        <li>GET api/courses/{id}/schedule?day=Sunday</li>
+        <li>POST api/courses/{id}/connectTutors</li>
+        <li>POST api/courses/{id}/disconnectTutors</li>
+        <li>и др</li>
     </ul>
     <li>api/subjects</li>
-    <li>api/schedules - можно по дню фильтровать как slots</li>
-
-
+    <ul>
+        <li>CRUD</li>
+    </ul>
+    <li>api/schedules</li>
+    <ul>
+        <li>GET api/schedules?day=Sunday</li>
+    </ul>
 </ul>
 
 

@@ -31,6 +31,9 @@ open class TutorSchedule(
     val studentLogin: String?
         get() = student?.login
 
+    val tutorLogin: String
+        get() = tutor.login
+
 
     @ManyToOne(targetEntity = Course::class)
     @JoinColumn(name = "course_id", updatable = true, nullable = true)

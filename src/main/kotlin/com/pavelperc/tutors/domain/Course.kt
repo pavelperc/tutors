@@ -46,13 +46,20 @@ open class Course(
         }
 //        println("After removal: ${tutors.map { "${it.login} :${it.courses.map { it.name }}" }}")
     }
-    
-    
+
+//
+//    @OneToMany(mappedBy = "course", cascade = arrayOf(CascadeType.REMOVE), fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    open val tutorSchedules: Set<TutorSchedule> = mutableSetOf()
+
+
+
+
+
     override fun toString(): String {
         return "Course(name='$name', subject=${subject.name}, tutors=${tutors.map { it.login }}, id=$id)"
     }
-    
-    
+
     /** Compares just id, name and subject*/
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -73,6 +80,4 @@ open class Course(
         result = 31 * result + id.hashCode()
         return result
     }
-    
-    
 }

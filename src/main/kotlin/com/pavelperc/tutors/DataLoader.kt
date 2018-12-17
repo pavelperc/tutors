@@ -93,8 +93,8 @@ class DataLoader(
             tutorScheduleRepo.save(this)
         }
 
-        sergey.tutorSchedules.byDayTime(Day.Sunday, 14).apply {
-            course = diskra
+        ivan.tutorSchedules.byDayTime(Day.Friday, 14).apply {
+            course = matan
             student = katja
             tutorScheduleRepo.save(this)
         }
