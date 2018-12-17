@@ -70,7 +70,8 @@ class Tutor(
     @ManyToMany(targetEntity = Course::class, fetch = FetchType.EAGER)
     val courses: MutableSet<Course> = mutableSetOf()
     
-    
+    @OneToMany(mappedBy = "tutor", fetch = FetchType.EAGER)
+    val schedules: MutableSet<TutorSchedule> = mutableSetOf()
     
     override fun toString() = "Tutor: ${super.toString()}"
     
@@ -87,7 +88,9 @@ class Tutor(
     override fun hashCode(): Int {
         return id.hashCode()
     }
-    
+
+
+
     
 }
 
